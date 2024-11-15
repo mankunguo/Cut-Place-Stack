@@ -1,0 +1,356 @@
+@font-face {
+  font-family: 'ABCMaxiRoundEdu';
+  src: url('font/ABCMaxiRoundEdu-Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'MO_VIO_DisplayNormal';
+  src: url('font/MO_VIO——DisplayNormal.otf') format('opentype');
+}
+@font-face {
+  font-family: 'ARIAL';
+  src: url('font/ARIAL.TTF') format('truetype');
+}
+@font-face {
+  font-family: 'Andale Mono';
+  src: url('font/Andale Mono.ttf') format('truetype');
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(240, 240, 240);
+  font-family: 'ABCMaxiRoundEdu', sans-serif;
+}
+a{
+  color:black;
+}
+
+#canvas-container, #video-container {
+  display: flex;
+  justify-content: center;
+  width: 32vw;
+  height: 46vw;
+  position: relative;
+  background-color: #f0f0f0; /* Optional: For visual distinction */
+  margin-bottom: 10px; /* Optional: Space between containers */
+}
+
+/* Style for canvas and video elements */
+canvas, video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* For the video to cover the container */
+}
+
+video {
+  /*transform: scaleX(-1); /* Optional: Mirror the video */
+}
+
+/* Menu styles */
+.title {
+  border-bottom: 1px solid black;
+  text-align: center;
+  padding: 1rem 1.5rem 0.9rem 1.5rem;
+  font-size:1.2rem;
+  height:4vh;
+}
+.questionmark{
+  display:block;
+  text-align: left;
+  position:absolute;
+  right:74%;
+  top:0px;
+  padding: 1rem  0.9rem ;
+  cursor:pointer;
+}
+
+.projectbrief{
+  display:none;
+  position:absolute;
+  z-index: 100;
+  background-color:rgb(240, 240, 240);
+  width:26.8%;
+  height:90vh;
+  overflow: scroll;
+}
+.projectbreifword{
+  display:block;
+  margin: 1rem 1.5rem 0.9rem 1.5rem;
+}
+
+.controlcontainer {
+  padding: 1.2rem 1.5rem 1rem 1.5rem;
+  display: grid;
+  grid-template-columns: 25% auto;
+  align-items: start;
+  font-size:1rem;
+  border-bottom:1px solid black;
+}
+
+.colorpicker {
+  font-family: 'ABCMaxiRoundEdu', sans-serif;
+}
+
+.colorpicker input[type="color"] {
+  appearance: none; /* Remove default styling in some browsers */
+  -webkit-appearance: none; /* Remove default styling in WebKit browsers */
+  border: none; /* Remove default border */
+  border-radius: 50%; /* Make the color picker circular */
+  width: 4vw; /* Set the width */
+  height: 4vw; /* Set the height */
+  cursor: pointer; /* Add a pointer cursor */
+  padding: 0; /* Remove default padding */
+  outline: none; /* Remove outline on focus */
+}
+
+.colorpicker input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0; /* Remove padding around the color swatch */
+}
+
+.colorpicker input[type="color"]::-webkit-color-swatch {
+  border: none; /* Remove border around the color swatch */
+  border-radius: 100%; /* Make the swatch circular */
+}
+
+.fontchoice, .sizechoice{
+  font-size:1rem;
+  display: grid;
+  grid-template-columns: 25% 75%;
+  align-items: center;
+}
+
+/* Dropdown container */
+.dropdown, .dropdown2 {
+  position: relative;
+  display: inline-block;
+  width: 100%; /* Make the dropdown take full width */
+}
+
+/* Dropdown button */
+.dropbtn, .dropbtn2 {
+  font-family: 'ABCMaxiRoundEdu', sans-serif;    
+  font-size:1rem;
+  background-color: #D9D9D9;
+  border: none;
+  padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+  position: relative; /* Add position relative for the pseudo-element */
+}
+.dropbtn::after, .dropbtn2::after {
+  content: '▼';                   /* Unicode for a down arrow */
+  position: absolute;
+  right: 10px;                    /* Position to the right */
+  top: 50%;
+  transform: translateY(-50%);    /* Center vertically */
+  font-size: 0.8rem;              /* Adjust arrow size */
+  pointer-events: none;           /* Clicks pass through the arrow */
+  color: #000000;                 /* Arrow color */
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content, .dropdown-content2 {
+  display: none;
+  position: absolute;
+  background-color: rgb(255, 255, 255); /* White background */
+  min-width: 100%;
+  box-sizing: border-box;
+  cursor:pointer;
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a, .dropdown-content2 a {
+  font-family: 'ABCMaxiRoundEdu', sans-serif;  
+  font-size:1rem;
+  color: rgb(0, 0, 0); /* Text color */
+  padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+  text-decoration: none;
+  display: block;
+  border: 1px solid black;
+  border-bottom:0px;
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content, .dropdown2:hover .dropdown-content2 {
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover, .dropdown-content2 a:hover {
+  background-color: #D9D9D9;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 27% 73%;
+}
+
+.menu {
+  border: 1px solid black;
+  height: 100vh;
+}
+
+.display {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
+  justify-items: center; /* Center items horizontally within their grid cells */
+  background-color: rgba(255, 255, 0, 0);
+  height: 100vh;
+  padding-right: 1vw;
+  padding-left: 1vw;
+  border: 1px solid black;
+  border-left: 0px;
+}
+
+.inputtext {
+  margin-top: 0.9rem;
+}
+
+.inputtext textarea {
+  font-family: 'ABCMaxiRoundEdu', sans-serif;
+  font-size: 1rem;
+  line-height: 110%;
+  padding: 0.3rem 0.6rem;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  height: 10vh;
+  resize: vertical; /* Allow vertical resizing */
+  outline: none; /* Remove outline on focus */
+}
+
+.inputtext textarea:focus {
+  border-color: #000000;
+}
+
+
+/* repeat part */
+
+.repeatandminus{
+  display: flex;
+  justify-content: space-between;
+  margin-top:0.4rem;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.repeatcheckbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.repeatcheckbox .custom-checkbox {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  background-color: #D9D9D9; /* Set the background color */
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  position: relative;
+}
+
+/* Add a checkmark when the checkbox is checked */
+.repeatcheckbox input[type="checkbox"]:checked + .custom-checkbox::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  width: 6px;
+  height: 12px;
+  border: solid rgb(0, 0, 0);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Adjust the label text */
+.repeatcheckbox label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Optional: Style the label text */
+.repeatcheckbox label span {
+  font-family: 'ABCMaxiRoundEdu', sans-serif;
+  font-size: 1rem;
+}
+
+
+button{
+  border:0px;
+  margin:0px;
+  padding:0px;
+  background-color: transparent; /* Corrected from 'none' to 'transparent' */
+  cursor: pointer; /* Added cursor style */
+}
+
+.addbutton{
+  float:right;
+  padding: 1.2rem 1.5rem 1rem 1.5rem;
+}
+
+/* Existing CSS remains unchanged */
+
+/* Adjustments for dynamically added control containers */
+.controlcontainer {
+  padding: 1.2rem 1.5rem 1rem 1.5rem;
+  display: grid;
+  grid-template-columns: 25% auto;
+  align-items: start;
+  font-size:1rem;
+  border-bottom:1px solid black;
+  position: relative; /* Added for positioning the remove button */
+}
+
+/* Remove Button Styling */
+.remove-button {
+  position: absolute;
+  bottom: 0.85rem;
+  right: 1.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+/* Ensure z-index of project brief is higher */
+.projectbrief {
+  z-index: 1000;
+}
+
+/* The rest of your existing CSS remains the same */
+.bottombuttoncontainer{
+  display:grid;
+  position:fixed;
+  bottom:0px;
+  width:26.8%;
+  height:2.5rem;
+  border-top:1px solid black;
+  border-bottom:1px solid black;
+  background-color:#D9D9D9;
+  z-index:100;
+  cursor:pointer;
+}
+
+.bottombuttoncontaine:hover{
+  background-color:rgb(240, 240, 240);
+  
+}
+
+.bottombutton{
+  font-family: 'ABCMaxiRoundEdu', sans-serif;
+  font-size:1rem;
+  display: grid;
+  align-items: center;
+  justify-items: center; 
+  text-align: center;
+}
+

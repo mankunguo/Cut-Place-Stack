@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Include Pickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
+    <!-- Include Pickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="layout"> 
+      <div class="menu">
+        <div class="title">
+          <div>Cut, Place, Stack</div>
+          <div class="questionmark">?</div>
+        </div>
+        <div class="projectbrief">
+          <div class="projectbreifword">
+            Cut Place Stacking is a performative design tool that investigates the intuitive role of the body in graphic surface production. By inviting participants to manipulate colored paper in front of a camera, the project transforms physical gestures into an immediate and labor-intensive process of producing typographic choreography. The tool foregrounds the body's centrality in design, turning every movement—cutting, placing, stacking—into a live visual outcome.
+            <br><br>
+            <a href="https://mankunguo.com/">@Mankun Guo</a>
+          </div>
+        </div>
+
+
+<div style="overflow: scroll; height:90vh;">
+        <!-- Control Containers Wrapper -->
+        <div id="controlContainers" >
+          <!-- Initial Control Containers will be inserted here -->
+        </div>
+
+        <!-- Add Button -->
+        <div class="addbutton" style="padding-bottom:4rem;">
+          <button type="button" id="addButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M19 13H7" stroke="black" stroke-width="2"/>
+              <path d="M13 19L13 7" stroke="black" stroke-width="2"/>
+              <circle cx="13" cy="13" r="12" stroke="black" stroke-width="2"/>
+            </svg>
+          </button>
+          </div>
+        </div>
+
+        <!-- bottom Button -->
+        <div class="bottombuttoncontainer"> 
+          <button type="button" class="bottombutton">Save img</button>
+        </div>
+</div>
+      <div class="display">
+        <div id="canvas-container"></div>
+        <div id="video-container"></div>
+      </div>
+    </div>
+
+    <!-- Hidden file input for font uploads (will be cloned) -->
+    <input type="file" id="fontUploaderTemplate" accept=".ttf,.otf,.woff,.woff2" style="display:none;">
+    <script src="sketch.js"></script>
+  </body>
+</html>
