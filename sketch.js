@@ -240,7 +240,7 @@ function addControlContainerImg() {
       </div>
       <div class="options">
         <div class="imagecontainer" id="imageContainer${index}">
-          <img id="imageDisplay${index}" src="assets/exampleimage.jpg" width="100%" height="100%">
+          <img id="imageDisplay${index}" src="assets/exampleimage.jpg">
           <div class="hover-text">↑ Upload your image</div>
         </div>
         <div class="repeatandminus">
