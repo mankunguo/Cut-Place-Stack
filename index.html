@@ -27,23 +27,36 @@
 
 
 <div style="overflow: scroll; height:90vh;">
+
+
+
         <!-- Control Containers Wrapper -->
         <div id="controlContainers" >
           <!-- Initial Control Containers will be inserted here -->
         </div>
 
-        <!-- Add Button -->
-        <div class="addbutton" style="padding-bottom:4rem;">
-          <button type="button" id="addButton">
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
-              <path d="M19 13H7" stroke="black" stroke-width="2"/>
-              <path d="M13 19L13 7" stroke="black" stroke-width="2"/>
-              <circle cx="13" cy="13" r="12" stroke="black" stroke-width="2"/>
-            </svg>
-          </button>
-          </div>
-        </div>
-
+        <!-- Add Button-->
+        <div  style="padding-bottom:8rem;">
+          <div class="addbuttonimg"><span>Image</span>
+            <button type="button" id="addButtonimg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <path d="M19 13H7" stroke="black" stroke-width="2"/>
+                <path d="M13 19L13 7" stroke="black" stroke-width="2"/>
+                <circle cx="13" cy="13" r="12" stroke="black" stroke-width="2"/>
+              </svg>
+            </button></div>
+            
+          <div class="addbutton"><span>Text</span>
+           <button type="button" id="addButton">
+             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+               <path d="M19 13H7" stroke="black" stroke-width="2"/>
+               <path d="M13 19L13 7" stroke="black" stroke-width="2"/>
+               <circle cx="13" cy="13" r="12" stroke="black" stroke-width="2"/>
+             </svg>
+           </button></div> 
+           </div>
+         </div>
+ 
         <!-- bottom Button -->
         <div class="bottombuttoncontainer"> 
           <button type="button" class="bottombutton">Save img</button>
@@ -57,6 +70,7 @@
 
     <!-- Hidden file input for font uploads (will be cloned) -->
     <input type="file" id="fontUploaderTemplate" accept=".ttf,.otf,.woff,.woff2" style="display:none;">
+    <input type="file" id="imageUploaderTemplate" accept="image/*" style="display:none;">
     <script src="sketch.js"></script>
   </body>
 </html>

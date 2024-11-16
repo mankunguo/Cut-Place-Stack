@@ -78,7 +78,7 @@ video {
   margin: 1rem 1.5rem 0.9rem 1.5rem;
 }
 
-.controlcontainer {
+.controlcontainer{
   padding: 1.2rem 1.5rem 1rem 1.5rem;
   display: grid;
   grid-template-columns: 25% auto;
@@ -291,9 +291,12 @@ button{
   cursor: pointer; /* Added cursor style */
 }
 
-.addbutton{
+.addbutton, .addbuttonimg{
   float:right;
-  padding: 1.2rem 1.5rem 1rem 1.5rem;
+  display:flex;
+  align-items: center;
+  gap:8px;
+  padding: 1.2rem 1.5rem 1rem 0rem;
 }
 
 /* Existing CSS remains unchanged */
@@ -332,12 +335,13 @@ button{
   position:fixed;
   bottom:0px;
   width:26.8%;
-  height:2.5rem;
   border-top:1px solid black;
   border-bottom:1px solid black;
   background-color:#D9D9D9;
   z-index:100;
   cursor:pointer;
+  padding-bottom:1rem;
+  padding-top:0.8rem;
 }
 
 .bottombuttoncontaine:hover{
@@ -354,3 +358,153 @@ button{
   text-align: center;
 }
 
+.sizechoice{
+  align-items: center;
+  display:grid;
+}
+
+/* General slider container styling */
+.slider-container {
+  width: 100%;
+}
+
+/* Remove default appearance */
+.slider-container input[type="range"] {
+  -webkit-appearance: none; /* For Chrome/Safari */
+  -moz-appearance: none;    /* For Firefox */
+  appearance: none;
+  width: 100%;
+  height: 2px; /* Height of the slider track */
+  background: #D9D9D9; /* Background color of the slider track */
+  outline: none; /* Remove outline */
+  margin: 8px 0; /* Adjust margin as needed */
+  padding: 0;
+}
+
+/* Slider Thumb */
+.slider-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px; /* Width of the thumb */
+  height: 15px; /* Height of the thumb */
+  background: #000000; /* Color of the thumb */
+  cursor: pointer;
+  border-radius: 50%; /* Make the thumb circular */
+  margin-top: -6px; /* Align thumb vertically */
+}
+
+
+/* Slider Track */
+.slider-container input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 3px;
+  background: #D9D9D9;
+  border: none;
+  border-radius: 1px;
+}
+
+
+/* Focus Styles */
+.slider-container input[type="range"]:focus {
+  outline: none;
+}
+
+.imagecontainer{
+  height:7rem;
+  background-color:#D9D9D9;
+  margin-bottom: 1rem;
+  padding:1.2rem;
+}
+img{
+  border-radius: 0.5rem;
+}
+.uploadimg{
+  display:flex;
+  align-items: center;
+  cursor: pointer;
+  gap:8px;
+}
+.controlcontainerimg{
+  padding: 1.2rem 1.5rem 1rem 1.5rem;
+  display: grid;
+  grid-template-columns: 25% auto;
+  align-items: start;
+  font-size:1rem;
+  border-bottom:1px solid black;
+  position: relative;
+}
+
+
+/* Existing CSS remains unchanged */
+
+/* Styles for image container hover effect */
+.imagecontainer {
+  position: relative;
+  cursor: pointer;
+}
+
+.imagecontainer .hover-text {
+  display: none;
+  width:100%;
+  height:100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'ABCMaxiRoundEdu', sans-serif;
+  font-size: 1rem;
+  color: black;
+  background-color:#D9D9D9;
+  
+}
+
+.imagecontainer:hover .hover-text {
+  display: grid;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom checkbox styling for "Keep proportion" */
+.keep-proportion-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.keep-proportion-checkbox .custom-checkbox {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  background-color: #D9D9D9; /* Set the background color */
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  position: relative;
+}
+
+/* Add a checkmark when the checkbox is checked */
+.keep-proportion-checkbox input[type="checkbox"]:checked + .custom-checkbox::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  width: 6px;
+  height: 12px;
+  border: solid rgb(0, 0, 0);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Adjust the label text */
+.keep-proportion-checkbox label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Optional: Style the label text */
+.keep-proportion-checkbox label span {
+  font-family: 'ABCMaxiRoundEdu', sans-serif;
+  font-size: 1rem;
+}
