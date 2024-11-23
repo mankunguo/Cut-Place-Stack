@@ -138,7 +138,8 @@ function addControlContainer() {
     textContent: 'Your text here.',
     customFontName: null,
     repeatText: true, // Default to true
-    type: 'text'
+    type: 'text',
+    lineHeight: 1.0 // Default line height multiplier (100%)
   };
   settingsArray.push({ index: index, settings: settings });
 
@@ -172,6 +173,13 @@ function addControlContainer() {
           <div>Size</div>
           <div class="slider-container">
             <input type="range" id="sizeSlider${index}" min="0.6" max="12" step="0.1" value="1" style="width:100%;">
+          </div>
+        </div>
+        <!-- Leading Slider -->
+        <div class="leadingchoice" style="margin-top:0.8rem;">
+          <div>Leading</div>
+          <div class="slider-container">
+            <input type="range" id="leadingSlider${index}" min="0.8" max="3" step="0.1" value="1" style="width:100%;">
           </div>
         </div>
         <div class="inputtext">
@@ -276,7 +284,6 @@ function addControlContainerImg() {
   });
 }
 
-
 function removeControlContainer(index) {
   // Remove settings from the array
   settingsArray = settingsArray.filter(item => item.index !== index);
@@ -369,6 +376,13 @@ function initializeControls(settings, index) {
     settings.fontSize = fontSizeInPixels;
   });
 
+  // Leading slider
+  var leadingSlider = document.getElementById('leadingSlider' + index);
+  leadingSlider.addEventListener('input', function() {
+    var leadingValue = parseFloat(this.value);
+    settings.lineHeight = leadingValue; // Directly use the multiplier
+  });
+
   // Text input
   var textInput = document.getElementById('textInput' + index);
   textInput.addEventListener('input', function() {
@@ -428,7 +442,6 @@ function initializeControlsImg(settings, index) {
   });
 }
 
-
 function draw() {
   if (!videoReady) {
     return; // Wait until the video is ready
@@ -477,7 +490,7 @@ function renderText(settings) {
     // Check if x exceeds the canvas width
     if (x >= width) {
       x = 0;
-      y += settings.fontSize; // Move to the next line
+      y += settings.fontSize * settings.lineHeight; // Move to the next line with adjusted leading
     }
 
     // Map canvas coordinates to video coordinates
@@ -509,7 +522,7 @@ function renderText(settings) {
         if (c === '\n') {
           // Handle line breaks
           x = 0;
-          y += settings.fontSize;
+          y += settings.fontSize * settings.lineHeight;
         } else {
           // Draw the character at (x, y)
           text(c, x, y);
@@ -664,8 +677,6 @@ function renderImage(settings) {
     image(maskedImage, 0, 0, width, height);
   }
 }
-
-
 
 // Function to calculate color distance
 function colorDistance(c1, c2) {

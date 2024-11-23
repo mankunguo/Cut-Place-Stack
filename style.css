@@ -115,7 +115,7 @@ video {
 .fontchoice, .sizechoice{
   font-size:1rem;
   display: grid;
-  grid-template-columns: 25% 75%;
+  grid-template-columns: 30% 70%;
   align-items: center;
 }
 
@@ -518,6 +518,68 @@ img{
 
 /* Optional: Style the label text */
 .keep-proportion-checkbox label span {
+  font-family: 'ABCMaxiRoundEdu', sans-serif;
+  font-size: 1rem;
+}
+
+/* Existing CSS remains unchanged */
+
+/* Styling for the sliders */
+.slider-container {
+  width: 100%;
+}
+
+/* Remove default appearance */
+.slider-container input[type="range"] {
+  -webkit-appearance: none; /* For Chrome/Safari */
+  -moz-appearance: none;    /* For Firefox */
+  appearance: none;
+  width: 100%;
+  height: 2px; /* Height of the slider track */
+  background: #D9D9D9; /* Background color of the slider track */
+  outline: none; /* Remove outline */
+  margin: 0px 0; /* Adjust margin as needed */
+  position: relative;
+  top: -4px;
+  padding: 0;
+}
+
+/* Slider Thumb */
+.slider-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px; /* Width of the thumb */
+  height: 15px; /* Height of the thumb */
+  background: #000000; /* Color of the thumb */
+  cursor: pointer;
+  border-radius: 50%; /* Make the thumb circular */
+  margin-top: -6px; /* Align thumb vertically */
+}
+
+/* Slider Track */
+.slider-container input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 3px;
+  background: #D9D9D9;
+  border: none;
+  border-radius: 1px;
+}
+
+/* Focus Styles */
+.slider-container input[type="range"]:focus {
+  outline: none;
+}
+
+/* Ensure the sliders and labels align properly */
+.sizechoice, .leadingchoice {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  margin-top: 0.8rem;
+}
+
+.sizechoice div:first-child,
+.leadingchoice div:first-child {
   font-family: 'ABCMaxiRoundEdu', sans-serif;
   font-size: 1rem;
 }
