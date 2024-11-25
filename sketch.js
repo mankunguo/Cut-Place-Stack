@@ -2,7 +2,11 @@
 
 var video;
 var videoReady = false; // Flag to check if video is ready
-var colorTolerance = 100; // Adjust this value for color matching sensitivity
+
+// Adjust these values for color matching sensitivity
+var hueTolerance = 10; // Hue ranges from 0 to 360
+var saturationTolerance = 30; // Saturation ranges from 0 to 100
+var brightnessTolerance = 100; // Brightness ranges from 0 to 255
 
 // Array to hold settings for each control container
 var settingsArray = [];
@@ -17,6 +21,9 @@ function preload() {
 function setup() {
   // Set pixel density to 1 to avoid high-DPI displays causing issues
   pixelDensity(1);
+
+  // Set the color mode to HSB with specific ranges
+  colorMode(HSB, 360, 100, 255);
 
   // Get the canvas container dimensions
   var canvasContainer = document.getElementById('canvas-container');
@@ -134,6 +141,7 @@ function addControlContainer() {
   var settings = {
     fontSize: 16, // Default font size in pixels (1rem = 16px)
     targetColor: [255, 0, 0],
+    targetColorHSB: [0, 100, 255], // Initial HSB color for red
     selectedFont: 'ARIAL',
     textContent: 'Your text here.',
     customFontName: null,
@@ -225,6 +233,7 @@ function addControlContainerImg() {
   // Create a settings object for the image control
   var settings = {
     targetColor: [255, 0, 0],
+    targetColorHSB: [0, 100, 255], // Initial HSB color for red
     image: null,
     imageLoaded: false,
     imageUrl: null,
@@ -315,7 +324,13 @@ function initializeControls(settings, index) {
   colorPicker.addEventListener('input', function() {
     var hexColor = colorPicker.value; // Get the hex color code
     settings.targetColor = hexToRgb(hexColor); // Convert hex to RGB array
+    settings.targetColorHSB = rgbToHsb(settings.targetColor[0], settings.targetColor[1], settings.targetColor[2]); // Convert to HSB
   });
+
+  // Initialize the HSB target color
+  var hexColor = colorPicker.value;
+  settings.targetColor = hexToRgb(hexColor);
+  settings.targetColorHSB = rgbToHsb(settings.targetColor[0], settings.targetColor[1], settings.targetColor[2]);
 
   // Font dropdown
   var fontButton = document.getElementById('fontButton' + index);
@@ -404,7 +419,13 @@ function initializeControlsImg(settings, index) {
   colorPicker.addEventListener('input', function() {
     var hexColor = colorPicker.value; // Get the hex color code
     settings.targetColor = hexToRgb(hexColor); // Convert hex to RGB array
+    settings.targetColorHSB = rgbToHsb(settings.targetColor[0], settings.targetColor[1], settings.targetColor[2]); // Convert to HSB
   });
+
+  // Initialize the HSB target color
+  var hexColor = colorPicker.value;
+  settings.targetColor = hexToRgb(hexColor);
+  settings.targetColorHSB = rgbToHsb(settings.targetColor[0], settings.targetColor[1], settings.targetColor[2]);
 
   // Image uploader
   var imageUploader = document.getElementById('imageUploader' + index);
@@ -504,10 +525,11 @@ function renderText(settings) {
       var g = video.pixels[index + 1]; // Green value
       var b = video.pixels[index + 2]; // Blue value
 
-      // Detect pixels matching the selected color within a tolerance
-      var pixelColor = [r, g, b];
-      var dist = colorDistance(pixelColor, settings.targetColor);
-      if (dist < colorTolerance) {
+      // Convert pixel color to HSB
+      var pixelColorHSB = rgbToHsb(r, g, b);
+
+      // Detect pixels matching the selected color within the tolerances
+      if (colorMatchesHSB(pixelColorHSB, settings.targetColorHSB)) {
         if (letterCounter >= letters.length) {
           if (settings.repeatText) {
             letterCounter = 0; // Reset letterCounter to repeat text
@@ -600,10 +622,11 @@ function renderImage(settings) {
       var vg = video.pixels[index + 1];
       var vb = video.pixels[index + 2];
 
-      var pixelColor = [vr, vg, vb];
-      var dist = colorDistance(pixelColor, settings.targetColor);
+      // Convert pixel color to HSB
+      var pixelColorHSB = rgbToHsb(vr, vg, vb);
 
-      if (dist < colorTolerance) {
+      // Detect pixels matching the selected color within the tolerances
+      if (colorMatchesHSB(pixelColorHSB, settings.targetColorHSB)) {
         // Matching color, set mask pixel to white
         settings.maskGraphics.pixels[index] = 255;
         settings.maskGraphics.pixels[index + 1] = 255;
@@ -678,13 +701,59 @@ function renderImage(settings) {
   }
 }
 
-// Function to calculate color distance
-function colorDistance(c1, c2) {
-  // c1 and c2 are arrays [r, g, b]
-  var dr = c1[0] - c2[0];
-  var dg = c1[1] - c2[1];
-  var db = c1[2] - c2[2];
-  return Math.sqrt(dr * dr + dg * dg + db * db);
+// Function to calculate if two colors match based on HSB tolerances
+function colorMatchesHSB(c1, c2) {
+  // c1 and c2 are arrays [h, s, b]
+  var hDiff = abs(c1[0] - c2[0]);
+  if (hDiff > 180) {
+    hDiff = 360 - hDiff; // Handle circular hue difference
+  }
+  var sDiff = abs(c1[1] - c2[1]);
+  var bDiff = abs(c1[2] - c2[2]);
+
+  if (hDiff <= hueTolerance && sDiff <= saturationTolerance && bDiff <= brightnessTolerance) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Function to convert RGB to HSB
+function rgbToHsb(r, g, b) {
+  // Convert RGB to HSB
+  var rPrime = r / 255;
+  var gPrime = g / 255;
+  var bPrime = b / 255;
+
+  var Cmax = max(rPrime, gPrime, bPrime);
+  var Cmin = min(rPrime, gPrime, bPrime);
+  var delta = Cmax - Cmin;
+
+  var h = 0;
+  if (delta == 0) {
+    h = 0;
+  } else if (Cmax == rPrime) {
+    h = 60 * (((gPrime - bPrime) / delta) % 6);
+  } else if (Cmax == gPrime) {
+    h = 60 * (((bPrime - rPrime) / delta) + 2);
+  } else if (Cmax == bPrime) {
+    h = 60 * (((rPrime - gPrime) / delta) + 4);
+  }
+
+  if (h < 0) {
+    h += 360;
+  }
+
+  var s = 0;
+  if (Cmax == 0) {
+    s = 0;
+  } else {
+    s = (delta / Cmax) * 100; // s ranges from 0 to 100
+  }
+
+  var v = Cmax * 255; // v ranges from 0 to 255
+
+  return [h, s, v];
 }
 
 // Function to convert hex color code to RGB array
